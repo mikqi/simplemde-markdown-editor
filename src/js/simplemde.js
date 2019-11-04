@@ -901,12 +901,12 @@ function _toggleLine(cm, name) {
 	var endPoint = cm.getCursor("end");
 	var repl = {
 		"quote": /^(\s*)\>\s+/,
-		"unordered-list": /^(\s*)(\*|\-|\+)\s+/,
+		"unordered-list": /^(\s*)(\-|\+)\s+/,
 		"ordered-list": /^(\s*)\d+\.\s+/
 	};
 	var map = {
 		"quote": "> ",
-		"unordered-list": "* ",
+		"unordered-list": "- ",
 		"ordered-list": "1. "
 	};
 	for(var i = startPoint.line; i <= endPoint.line; i++) {
