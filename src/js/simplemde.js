@@ -34,6 +34,7 @@ var bindings = {
 	"toggleHeading1": toggleHeading1,
 	"toggleHeading2": toggleHeading2,
 	"toggleHeading3": toggleHeading3,
+	"toggleHeadingCustom": toggleHeadingCustom,
 	"cleanBlock": cleanBlock,
 	"drawTable": drawTable,
 	"drawHorizontalRule": drawHorizontalRule,
@@ -584,6 +585,11 @@ function toggleHeading3(editor) {
 	_toggleHeading(cm, undefined, 3);
 }
 
+function toggleHeadingCustom(editor) {
+	var cm = editor.codemirror;
+	_toggleHeading(cm, "custom", 3);
+}
+
 
 /**
  * Action for toggling ul.
@@ -837,6 +843,8 @@ function _toggleHeading(cm, direction, size) {
 				if(currHeadingLevel <= 0) {
 					if(direction == "bigger") {
 						text = "###### " + text;
+					} else if (direction == "custom") {
+						text = "## " + text;
 					} else {
 						text = "# " + text;
 					}
@@ -844,6 +852,8 @@ function _toggleHeading(cm, direction, size) {
 					text = text.substr(7);
 				} else if(currHeadingLevel == 1 && direction == "bigger") {
 					text = text.substr(2);
+				} else if(currHeadingLevel == 3 && direction == "custom") {
+					text = text.substr(4);
 				} else {
 					if(direction == "bigger") {
 						text = text.substr(1);
@@ -1123,6 +1133,12 @@ var toolbarBuiltInButtons = {
 		action: toggleHeading3,
 		className: "fa fa-header fa-header-x fa-header-3",
 		title: "Small Heading"
+	},
+	"heading-custom": {
+		name: "heading-custom",
+		action: toggleHeadingCustom,
+		className: "fa fa-header fa-header-x fa-header-2",
+		title: "Custom Heading"
 	},
 	"separator-1": {
 		name: "separator-1"
@@ -1888,6 +1904,7 @@ SimpleMDE.toggleHeadingBigger = toggleHeadingBigger;
 SimpleMDE.toggleHeading1 = toggleHeading1;
 SimpleMDE.toggleHeading2 = toggleHeading2;
 SimpleMDE.toggleHeading3 = toggleHeading3;
+SimpleMDE.toggleHeadingCustom = toggleHeadingCustom;
 SimpleMDE.toggleCodeBlock = toggleCodeBlock;
 SimpleMDE.toggleUnorderedList = toggleUnorderedList;
 SimpleMDE.toggleOrderedList = toggleOrderedList;
@@ -1931,6 +1948,9 @@ SimpleMDE.prototype.toggleHeading2 = function() {
 };
 SimpleMDE.prototype.toggleHeading3 = function() {
 	toggleHeading3(this);
+};
+SimpleMDE.prototype.toggleHeadingCustom = function() {
+	toggleHeadingCustom(this);
 };
 SimpleMDE.prototype.toggleCodeBlock = function() {
 	toggleCodeBlock(this);
